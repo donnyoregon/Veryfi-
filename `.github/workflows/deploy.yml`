@@ -1,0 +1,17 @@
+name: Deploy to Deno
+on:
+  push:
+    branches: [main]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: denoland/setup-deno@v1
+        with:
+          deno-version: '1.40'
+      - run: deno task build  # Only if using AOT builds in Fresh 1.6+
+      - uses: denoland/deployctl@v1
+        with:
+          project: donnyoregon-veryfi-47
+          entrypoint: main.ts
